@@ -50,7 +50,3 @@ POLICY_LIST = list_of_md_policy(posb_action_state())
 
 prob_df = make_param_df(PROB_PARAM_DF_DICT, POLICY_LIST[0])
 reward_df = make_param_df(REWARD_PARAM_DF_DICT, POLICY_LIST[0])
-
-AAA = np.matrix('1 2; 3 4')
-print(AAA)
-print(AAA[0, 1])

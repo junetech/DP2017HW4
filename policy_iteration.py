@@ -25,7 +25,6 @@ def posb_action_state():
     """
     return {'s': ['slow', 'fast'], 'm': ['slow', 'fast'], 'f': ['slow']}
 
-
 def list_of_md_policy(posb_action_dict):
     """
     Returns all combination of markovian deterministic policies
@@ -84,7 +83,7 @@ def reward_vector(prob_mat, reward_mat):
     for i in range(state_num):
         for j in range(state_num):
             reward[i] += prob_mat[i, j] * reward_mat[i, j]
-    reward = np.matrix(reward).getI()
+    reward = np.matrix(reward).transpose()
     return reward
 
 def arg_max_policy(current_value):
@@ -113,21 +112,20 @@ def policy_iterate(current_policy, iterate_num):
 
     prob_df = make_param_df(PROB_PARAM_DF_DICT, current_policy)
     reward_df = make_param_df(REWARD_PARAM_DF_DICT, current_policy)
-
     prob_mat = df_into_npm(prob_df)
     reward_mat = df_into_npm(reward_df)
     current_value = np.matmul(I_delta_P_inverse(prob_mat), reward_vector(prob_mat, reward_mat))
 
     next_policy = arg_max_policy(current_value)
 
-    if next_policy == current_policy:
-        print(current_value)
+    print(current_value)
+    if next_policy == current_policy: 
         return current_policy, iterate_num
     return policy_iterate(next_policy, iterate_num)
 
 PROB_PARAM_DF_DICT = read_xlsx_file("probability_param.xlsx")
 REWARD_PARAM_DF_DICT = read_xlsx_file("reward_param.xlsx")
-DELTA = 0.9
+DELTA = 0.75
 POLICY_LIST = list_of_md_policy(posb_action_state())
 ITERATE_NUM = 0
 

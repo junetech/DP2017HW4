@@ -1,5 +1,6 @@
 """
-Loads parameters for transition probability and reward of 3-state problem.
+Loads parameters for transition probability and reward of 3-state problem,
+and calculates optimal policy by policy iteration.
 
 Requires:
 
@@ -125,7 +126,7 @@ def policy_iterate(current_policy, iterate_num):
 
 PROB_PARAM_DF_DICT = read_xlsx_file("probability_param.xlsx")
 REWARD_PARAM_DF_DICT = read_xlsx_file("reward_param.xlsx")
-DELTA = 0.75
+DELTA = 0.7
 POLICY_LIST = list_of_md_policy(posb_action_state())
 ITERATE_NUM = 0
 

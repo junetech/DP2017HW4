@@ -20,27 +20,10 @@ def read_xlsx_file(file_name):
     ord_dict_df = pd.read_excel(file_name, sheet_name=None)
     return ord_dict_df
 
-def posb_action_state():
-    """
-    Returns possible action choice for each state
-    """
-    return {'s': ['slow', 'fast'], 'm': ['slow', 'fast'], 'f': ['slow']}
-
-def list_of_md_policy(posb_action_dict):
+def list_of_md_policy():
     """
     Returns all combination of markovian deterministic policies
     """
-    state_list = []
-    action_list = []
-    for key, value in posb_action_dict.items():
-        state_list.append(key)
-        action_list.append(value)
-
-    policy_ea = 1
-    for state_list in action_list:
-        policy_ea = policy_ea * len(state_list)
-
-    policy_list = [{} for i in range(policy_ea)]
 
     policy_list = [{'s': 'slow', 'm': 'slow', 'f': 'slow'}, {'s': 'slow', 'm': 'fast', 'f': 'slow'}, {'s': 'fast', 'm': 'slow', 'f': 'slow'}, {'s': 'fast', 'm': 'fast', 'f': 'slow'}]
     return policy_list
@@ -119,15 +102,14 @@ def policy_iterate(current_policy, iterate_num):
 
     next_policy = arg_max_policy(current_value)
 
-    print(current_value)
-    if next_policy == current_policy: 
-        return current_policy, iterate_num
+    if next_policy == current_policy:
+        return current_value, current_policy, iterate_num
     return policy_iterate(next_policy, iterate_num)
 
 PROB_PARAM_DF_DICT = read_xlsx_file("probability_param.xlsx")
 REWARD_PARAM_DF_DICT = read_xlsx_file("reward_param.xlsx")
 DELTA = 0.7
-POLICY_LIST = list_of_md_policy(posb_action_state())
+POLICY_LIST = list_of_md_policy()
 ITERATE_NUM = 0
 
 print(policy_iterate(POLICY_LIST[0], ITERATE_NUM))
